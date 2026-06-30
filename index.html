@@ -3,266 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Core Mindset AI — Extreme GPT Engine</title>
+    <title>Core Mindset Firefly 1.5 — Oficiální Web</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Globální reset a temný kybernetický styl */
+        :root {
+            --bg-color: #05080f;
+            --card-bg: #0d121f;
+            --accent-color: #00f2ff; /* Firefly Cyan */
+            --accent-glow: rgba(0, 242, 255, 0.3);
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+            --dev-color: #a855f7; /* Developer Purple */
+        }
+
         * {
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #e2e8f0;
-            background-color: #0b0f19;
             margin: 0;
-            padding: 40px 20px;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background-color: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            overflow-x: hidden;
         }
 
-        /* Záhlaví webu */
-        .header {
+        /* --- Animované pozadí (Firefly Effect) --- */
+        .firefly-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #101827 0%, #05080f 100%);
+        }
+
+        /* --- Navigace --- */
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(5, 8, 15, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 20px;
+            cursor: pointer;
+            padding: 10px 20px;
+            transition: 0.3s;
+            border-radius: 8px;
+        }
+
+        .nav-btn.active {
+            color: var(--accent-color);
+            background: rgba(0, 242, 255, 0.1);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        /* --- Header --- */
+        header {
             text-align: center;
-            border-bottom: 2px solid #3b82f6;
-            padding-bottom: 30px;
-            margin-bottom: 40px;
+            padding: 80px 20px;
         }
-        h1 {
-            font-size: 28pt;
-            color: #ffffff;
-            margin: 0 0 10px 0;
-            letter-spacing: -0.5px;
-        }
-        .subtitle {
-            font-size: 13pt;
-            color: #9ca3af;
-            margin: 0;
-        }
-        .badge {
+
+        .version-badge {
             display: inline-block;
-            background-color: #1e3a8a;
-            color: #3b82f6;
-            padding: 4px 12px;
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            color: #000;
+            padding: 5px 15px;
             border-radius: 20px;
-            font-size: 9pt;
+            font-size: 0.8rem;
             font-weight: bold;
-            text-transform: uppercase;
-            margin-top: 15px;
-            border: 1px solid #3b82f6;
-        }
-
-        /* Nadpisy */
-        h2 {
-            font-size: 18pt;
-            color: #ffffff;
-            margin-top: 40px;
             margin-bottom: 20px;
-            border-left: 4px solid #3b82f6;
-            padding-left: 12px;
-        }
-        h3 {
-            font-size: 13pt;
-            color: #60a5fa;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-
-        p, li {
-            font-size: 11pt;
-            color: #d1d5db;
-        }
-        ul, ol {
-            padding-left: 20px;
-            margin-bottom: 20px;
-        }
-        li {
-            margin-bottom: 8px;
-        }
-
-        /* Tabulkové rozvržení architektury */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            background-color: #1f2937;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        th, td {
-            padding: 14px 16px;
-            text-align: left;
-            font-size: 10.5pt;
-        }
-        th {
-            background-color: #1e293b;
-            color: #3b82f6;
-            font-weight: bold;
-            border-bottom: 2px solid #3b82f6;
             text-transform: uppercase;
-            font-size: 9.5pt;
-            letter-spacing: 0.5px;
-        }
-        td {
-            border-bottom: 1px solid #374151;
-        }
-        tr:last-child td {
-            border-bottom: none;
-        }
-        .tech-name {
-            color: #ffffff;
-            font-weight: bold;
         }
 
-        /* Ukázky kódu a konzole */
-        pre {
-            background-color: #030712;
-            color: #34d399;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-            font-size: 10pt;
-            border: 1px solid #1f2937;
-            margin: 15px 0;
-            line-height: 1.5;
-        }
-        code {
-            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-            background-color: #030712;
-            color: #f43f5e;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 9.5pt;
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
         }
 
-        /* Zvýrazněný datový callout box */
-        .callout {
-            background-color: #1e1b4b;
-            border-left: 4px solid #f59e0b;
-            padding: 20px;
-            border-radius: 0 8px 8px 0;
-            margin: 30px 0;
-        }
-        .callout-title {
+        .status-tag {
             color: #f59e0b;
-            font-weight: bold;
-            margin-bottom: 8px;
-            font-size: 11pt;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            display: block;
         }
 
-        /* Patička webu */
-        .footer {
-            text-align: center;
+        /* --- Sekce --- */
+        .content-section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: none; /* Skryto defaultně */
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid #1f2937;
-            color: #6b7280;
-            font-size: 9pt;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 16px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+        }
+
+        /* --- Developer Styles --- */
+        .code-block {
+            background: #010409;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: #7ee787;
+            overflow-x: auto;
+            border: 1px solid #30363d;
+            margin: 20px 0;
+        }
+
+        .tech-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tech-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .tech-list b {
+            color: var(--dev-color);
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .firefly-icon {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: block;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <div class="header">
-            <h1>🚀 Core Mindset AI</h1>
-            <p class="subtitle">Extreme GPT Engine & Framework v čistém PyTorchi</p>
-            <span class="badge">~130M Parametrů (GPT-2 Quality)</span>
+    <div class="firefly-bg"></div>
+
+    <nav>
+        <button class="nav-btn active" onclick="showSection('home', this)">
+            <i class="fas fa-home"></i> Home
+        </button>
+        <button class="nav-btn" onclick="showSection('dev', this)">
+            <i class="fas fa-code"></i> Developers
+        </button>
+    </nav>
+
+    <header>
+        <span class="version-badge">Alpha Release</span>
+        <h1>Firefly 1.5</h1>
+        <span class="status-tag"><i class="fas fa-tools"></i> Projekt je ve fázi aktivního vývoje</span>
+        <p style="color: var(--text-dim); max-width: 600px; margin: 20px auto;">
+            Nová generace Core Mindset AI. Optimalizovaný engine navržený pro uvažování, rychlost a efektivitu.
+        </p>
+    </header>
+
+    <main id="home" class="content-section active">
+        <div class="card" style="text-align: center; border-color: rgba(245, 158, 11, 0.3);">
+            <h2>Vize Firefly 1.5</h2>
+            <p>Firefly není jen další chatovací robot. Je to "Extreme GPT" engine postavený pro uživatele, kteří vyžadují přesnost a transparentnost v myšlení stroje. Naším cílem je přinést výkon velkých modelů do rukou jednotlivců s využitím chytré optimalizace.</p>
         </div>
 
-        <p>Vítejte na oficiální stránce open-source projektu <strong>Core Mindset AI</strong>. Tento framework představuje špičkově optimalizovaný jazykový model (LLM) s kapacitou přibližně 130 milionů parametrů. Architektura je navržena od úplného základu tak, aby dosahovala maximální propustnosti a efektivity při trénování na dostupném hardwaru i cloudových instancích typu Google Colab.</p>
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-brain firefly-icon"></i>
+                <h3>Pokročilé uvažování</h3>
+                <p>Implementujeme dedikované sekce pro "myšlení" modelu, což umožňuje AI analyzovat problém dříve, než odpoví.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-bolt firefly-icon"></i>
+                <h3>Blesková odezva</h3>
+                <p>Díky architektuře Firefly 1.5 dosahujeme vysoké rychlosti generování i na běžně dostupném hardwaru.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-shield-halved firefly-icon"></i>
+                <h3>Open Source srdce</h3>
+                <p>Věříme v otevřenost. Firefly je vyvíjen s důrazem na komunitu a transparentnost kódu.</p>
+            </div>
+        </div>
+    </main>
 
-        <h2>💎 Hlavní Architektonické Přednosti</h2>
-        <p>Projekt opouští akademické standardy starých transformerů a implementuje techniky, které pohání nejmodernější LLM současnosti (Llama 3, Mistral, GPT-4):</p>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 25%;">Technologie</th>
-                    <th style="width: 45%;">Popis funkce</th>
-                    <th style="width: 30%;">Hlavní benefit</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="tech-name">RMSNorm</td>
-                    <td>Počítá pouze rozptyl prvků namísto rozptylu a aritmetického průměru (LayerNorm).</td>
-                    <td>Zrychlení GPU o 10–50 % a stabilnější hluboké sítě.</td>
-                </tr>
-                <tr>
-                    <td class="tech-name">SwiGLU Aktivace</td>
-                    <td>Využívá pokročilé lineární brány kombinované s aktivací SiLU (Swish).</td>
-                    <td>Drastické zvýšení vyjadřovacích a logických schopností modelu.</td>
-                </tr>
-                <tr>
-                    <td class="tech-name">Fused Projections</td>
-                    <td>Slučuje výpočty matic pro Query, Key a Value do jedné operace <code>qkv_proj</code>.</td>
-                    <td>Eliminace prodlev paměťové sběrnice a maximální paralelizace.</td>
-                </tr>
-                <tr>
-                    <td class="tech-name">Weight Tying</td>
-                    <td>Výstupní vrstva <code>lm_head</code> plně sdílí paměť se vstupními embeddingy.</td>
-                    <td>Úspora desítek milionů parametrů bez jakékoliv ztráty inteligence.</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>🛠️ Technická Specifikace Konfigurace</h2>
-        <ul>
-            <li><strong>Dimenze embeddingu (n_embd):</strong> 768 (šířka sítě)</li>
-            <li><strong>Počet hlav pozornosti (n_head):</strong> 12 (vnitřní rozměr hlavy = 64)</li>
-            <li><strong>Počet vrstev (n_layer):</strong> 12 transformer bloků nad sebou</li>
-            <li><strong>Kontextové okno (block_size):</strong> 512 tokenů (délka vnímaného textu)</li>
-        </ul>
-
-        <h2>⚡ Rychlý Start & Inicializace</h2>
-        <p>Pro spuštění tréninkového enginu na Google Colab (s dedikovanou grafickou kartou NVIDIA T4) nebo lokálním stroji postupujte podle následujících kroků.</p>
-
-        <h3>1. Instalace závislostí</h3>
-        <pre>pip install torch tokenizers regex tqdm</pre>
-
-        <h3>2. Struktura repozitáře</h3>
-        <pre>
-├── data/
-│   └── training_data.txt       # Vyčištěný textový korpus pro výuku
-├── src/
-│   ├── tokenizer.py            # Custom GPT-4 Regex Tokenizer
-│   ├── dataset.py              # DataLoader s podporou int32 cachování
-│   └── model.py                # Extreme GPT Max architektura (RMSNorm, SwiGLU)
-└── train.py                    # Trénovací loop s podporou AMP FP16 a Cosine Scheduleru</pre>
-
-        <div class="callout">
-            <div class="callout-title">💡 Doporučený formát trénovacích dat</div>
-            <p style="margin: 0;">Pro trénink modelu s uvažováním (Reasoning) formátujte vstupní soubor <code>training_data.txt</code> pomocí speciálních tokenů takto:<br>
-            <code>&lt;|user|&gt;Tvůj dotaz&lt;|thought|&gt;Úvaha modelu&lt;|assistant|&gt;Odpověď---</code></p>
+    <main id="dev" class="content-section">
+        <div class="grid" style="margin-top: 0;">
+            <div class="card">
+                <h3>Architektura Enginu</h3>
+                <ul class="tech-list">
+                    <li>Parametry: <b>~130 Milionů</b></li>
+                    <li>Normalizace: <b>RMSNorm</b></li>
+                    <li>Aktivace: <b>SwiGLU (SiLU)</b></li>
+                    <li>Pozornost: <b>Fused QKV Projections</b></li>
+                    <li>Vrstvy: <b>12 L x 12 H</b></li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Tréninková Data</h3>
+                <p>Model využívá formátování <b>Reasoning-Chain</b>:</p>
+                <div class="code-block">
+&lt;|user|&gt;
+&lt;|thought|&gt;
+&lt;|assistant|&gt;
+                </div>
+                <p>Optimalizováno pro <b>Google Colab T4</b> přes AMP FP16.</p>
+            </div>
         </div>
 
-        <h3>3. Spuštění optimalizovaného tréninku</h3>
-        <pre>python train.py</pre>
+        <div class="card" style="margin-top: 30px;">
+            <h3>Implementace v PyTorchi</h3>
+            <p>Ukázka modernizovaného RMSNorm bloku z Firefly 1.5:</p>
+            <div class="code-block">
+class RMSNorm(nn.Module):
+    def __init__(self, dim, eps=1e-6):
+        super().__init__()
+        self.eps = eps
+        self.weight = nn.Parameter(torch.ones(dim))
 
-        <h2>📈 Tréninková Pipeline & Řízení VRAM</h2>
-        <p>Tréninkový skript <code>train.py</code> v sobě integruje pokročilé techniky pro optimální správu paměti grafické karty a stabilitu matematického aparátu:</p>
-        <ol>
-            <li><strong>Mixed Precision (AMP FP16):</strong> Výpočty probíhají dynamicky v 16-bitové přesnosti, což snižuje nároky na VRAM na polovinu a zrychluje násobení matic.</li>
-            <li><strong>Cosine Learning Rate Scheduler:</strong> Plynulý náběh (warmup) a následný kosinusový pokles zabraňují uváznutí v lokálních minimech a zajišťují hladkou konvergenci.</li>
-            <li><strong>Gradient Clipping:</strong> Striktní zastropování explodujících gradientů (na hodnotu 1.0) zajišťuje kontinuitu učení i u hluboké 12-vrstvé architektury.</li>
-        </ol>
+    def _norm(self, x):
+        return x * torch.rsqrt(x.pow(2).mean(-1, keepdim=True) + self.eps)
 
-        <div class="footer">
-            Core Mindset AI je open-source projekt distribuovaný pod MIT licencí.<br>
-            Určeno pro edukační a výzkumné účely v oblasti deep learningu.
+    def forward(self, x):
+        return self._norm(x.float()).type_as(x) * self.weight
+            </div>
         </div>
+    </main>
 
-    </div>
+    <footer>
+        <i class="fas fa-microchip firefly-icon"></i>
+        <p>&copy; 2024 Core Mindset Firefly. Všechna práva vyhrazena ve vývojové fázi.</p>
+        <p style="font-size: 0.7rem; opacity: 0.5;">Built for Extreme Performance AI</p>
+    </footer>
 
+    <script>
+        function showSection(sectionId, btn) {
+            // Skryj všechny sekce
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            // Deaktivuj všechna tlačítka
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            // Aktivuj vybranou sekci a tlačítko
+            document.getElementById(sectionId).classList.add('active');
+            btn.classList.add('active');
+
+            // Pokud je to Dev sekce, změníme barvu akcentu (volitelné)
+            if(sectionId === 'dev') {
+                document.documentElement.style.setProperty('--accent-color', '#a855f7');
+                document.documentElement.style.setProperty('--accent-glow', 'rgba(168, 85, 247, 0.3)');
+            } else {
+                document.documentElement.style.setProperty('--accent-color', '#00f2ff');
+                document.documentElement.style.setProperty('--accent-glow', 'rgba(0, 242, 255, 0.3)');
+            }
+        }
+    </script>
 </body>
 </html>
